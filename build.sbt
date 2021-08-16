@@ -2,7 +2,7 @@ import org.scalajs.jsenv.nodejs._
 
 lazy val specs2Version = Def.setting(
   if (scalaBinaryVersion.value == "3") {
-    "5.0.0-ALPHA-03"
+    "5.0.0-RC-14"
   } else {
     "4.12.12"
   }
@@ -163,22 +163,8 @@ lazy val commonSettings = Def.settings(
 ) ++ warnUnusedImport ++ prompt
 
 lazy val commonJsSettings = Seq(
-  libraryDependencies ++= {
-    if (scalaBinaryVersion.value == "3") {
-      Nil
-    } else {
-      specs2.value
-    }
-  },
-  Test / sources := {
-    if (scalaBinaryVersion.value == "3") {
-      // TODO
-      Nil
-    } else {
-      (Test / sources).value
-    }
-  },
   parallelExecution := false,
+  libraryDependencies ++= specs2.value,
   scalacOptions += {
     val a = (LocalRootProject / baseDirectory).value.toURI.toString
     val g = "https://raw.githubusercontent.com/atnos-org/eff/" + hash()
